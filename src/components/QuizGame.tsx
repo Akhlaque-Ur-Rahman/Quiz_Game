@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { AlertCircle, CheckCircle, XCircle, MapPin, Calculator, Globe } from 'lucide-react';
+import { AlertCircle, CheckCircle, XCircle, MapPin, Calculator, Globe, BarChart, RotateCcw, ArrowRight } from 'lucide-react';
 import clsx from 'clsx';
 import create from 'zustand';
 
@@ -71,7 +71,7 @@ const categories: Category[] = [
 ];
 
 const QuizGame: React.FC = () => {
-  const { score, answers, incrementScore, addAnswer, reset } = useQuizStore();
+  const { score, incrementScore, addAnswer, reset } = useQuizStore();
   const [gameState, setGameState] = useState<'selectCategory' | 'quiz' | 'results'>('selectCategory');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -154,14 +154,17 @@ const QuizGame: React.FC = () => {
         <CardContent className="p-6 space-y-6">
           <div className="flex justify-around text-center">
             <div>
+              <CheckCircle className="h-8 w-8 text-secondary mx-auto mb-2" />
               <p className="text-3xl font-bold text-secondary">{correct}</p>
               <p className="text-sm opacity-80">Correct</p>
             </div>
             <div>
+              <XCircle className="h-8 w-8 text-error mx-auto mb-2" />
               <p className="text-3xl font-bold text-error">{incorrect}</p>
               <p className="text-sm opacity-80">Incorrect</p>
             </div>
             <div>
+              <BarChart className="h-8 w-8 text-white mx-auto mb-2" />
               <p className="text-3xl font-bold">{total}</p>
               <p className="text-sm opacity-80">Total</p>
             </div>
@@ -171,11 +174,13 @@ const QuizGame: React.FC = () => {
             <div className="bg-gray-700 h-2 rounded-full overflow-hidden">
               <div
                 className="bg-secondary h-full transition-all"
-                style={{ width: `${percentage}%` }}
+                style={ { width: `${percentage}%` } }
               />
             </div>
           </div>
-          <Button onClick={restartQuiz} className="w-full bg-secondary hover:bg-secondary/90">Play Again</Button>
+          <Button onClick={restartQuiz} className="w-full bg-secondary hover:bg-secondary/90">
+            <RotateCcw className="mr-2 h-4 w-4" /> Play Again
+          </Button>
         </CardContent>
       </Card>
     );
@@ -221,7 +226,7 @@ const QuizGame: React.FC = () => {
         )}
         {showResult && (
           <Button onClick={nextQuestion} className="w-full mt-6 bg-primary hover:bg-primary/90">
-            {currentQuestion < selectedCategory!.questions.length - 1 ? 'Next Question' : 'View Results'}
+            {currentQuestion < selectedCategory!.questions.length - 1 ? 'Next Question' : 'View Results'} <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         )}
         <p className="mt-4 text-sm opacity-80">Score: {score}</p>
